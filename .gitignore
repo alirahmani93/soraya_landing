@@ -5,3 +5,4 @@ node_modules/
 *.tsbuildinfo
 
 product/costs.yaml
+.playwright-mcp

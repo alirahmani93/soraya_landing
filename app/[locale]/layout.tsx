@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import "../globals.css";
 import { getDictionary, isLocale, LOCALES } from "@/lib/i18n";
 import { brand } from "@/lib/catalog";
+import { VIDEO_ORIGIN } from "@/components/HeroVideo";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -54,6 +55,10 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir={brand.locales[locale].dir}>
+      <head>
+        <link rel="preconnect" href={VIDEO_ORIGIN} />
+        <link rel="dns-prefetch" href={VIDEO_ORIGIN} />
+      </head>
       <body className={`${fraunces.variable} ${aref.variable} ${tajawal.variable}`}>
         {children}
       </body>
