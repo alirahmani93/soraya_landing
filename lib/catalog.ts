@@ -42,6 +42,19 @@ export const DRAWERS: DrawerSpec[] = [
   { id: "tea", image: "/images/tea-glass.jpg", components: [] },
 ];
 
+/** Macro shot per contents row. Generated on paper (#F6EFE2) so the thumbnails sit
+ *  on the page background without a visible edge — replace with the real photographs
+ *  after the shoot. */
+const COMPONENT_IMAGES: Record<string, string> = {
+  "saffron-negin": "/images/components/saffron-negin.webp",
+  "saffron-powder": "/images/components/saffron-negin.webp",
+  "kakuti-powder": "/images/components/kakuti-powder.webp",
+  "kakuti-leaf": "/images/components/kakuti-leaf.webp",
+  "rose-buds": "/images/components/rose-buds.webp",
+  "rose-petals": "/images/components/rose-petals.webp",
+  "soraya-teabag": "/images/components/teabag.webp",
+};
+
 export type SkuId = keyof typeof catalog.skus;
 
 /** Presentation order: flagship first, then down the ladder. */
@@ -66,7 +79,12 @@ function describe(row: ContentEntry, locale: Locale) {
   const source = row.component
     ? catalog.components[key as keyof typeof catalog.components]
     : catalog.assemblies[key as keyof typeof catalog.assemblies];
-  return { key, name: source.name[locale], qty: formatQty(row.qty, row.unit, locale) };
+  return {
+    key,
+    name: source.name[locale],
+    qty: formatQty(row.qty, row.unit, locale),
+    image: COMPONENT_IMAGES[key] ?? null,
+  };
 }
 
 /** A SKU's contents, grouped the way the flagship's drawers group them. Groups a SKU

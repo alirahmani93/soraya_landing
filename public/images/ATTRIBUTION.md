@@ -19,6 +19,27 @@ because it is good practice and because it makes the swap-out auditable.
 | `rose-buds-tins.jpg` | Rose secondary | [photo-1778423618436](https://images.unsplash.com/photo-1778423618436-75f7620ebd10) | Unsplash |
 | `tea-glass.jpg` | Tea drawer | [photo-1558160074](https://images.unsplash.com/photo-1558160074-4d7d8bdf4256) | Unsplash |
 
+## `components/` — generated, not photographed
+
+The six macro thumbnails in `components/` beside each row of "What is in the box"
+are AI-generated (Higgsfield, nano-banana, 4K, one prompt pattern from the
+imagery skill so they read as one set), on the brand paper background. Each is
+centre-cropped and white-balanced toward `paper` (#F6EFE2) so the six circles do
+not drift warm against the page:
+
+| File | Row |
+|---|---|
+| `saffron-negin.webp` | Negin saffron — ground pinch plus threads |
+| `kakuti-powder.webp` | Kakuti powder plus a few leaves |
+| `kakuti-leaf.webp` | Kakuti whole leaf |
+| `rose-buds.webp` | Damask rose buds |
+| `rose-petals.webp` | Damask rose petals |
+| `teabag.webp` | Soraya blend tea bag |
+
+They show the raw crops, not the packed product, and quantities in frame are
+illustrative — the shipped fill is the number in the row beside the image. Swap
+them for the real macros from the shoot; that is shot 5 in the imagery skill.
+
 ## What is deliberately missing
 
 **There is no photograph of the box**, because the box does not exist yet. The

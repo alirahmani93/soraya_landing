@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRef, useState } from "react";
 import { EnquiryButton } from "./Enquiry";
 
@@ -12,7 +13,7 @@ export type PackageView = {
     id: string;
     name: string;
     note: string;
-    rows: { key: string; name: string; qty: string | null }[];
+    rows: { key: string; name: string; qty: string | null; image: string | null }[];
   }[];
 };
 
@@ -90,18 +91,30 @@ export default function Packages({
             <article key={group.id} className="bg-paper p-8">
               <h3 className="display text-2xl">{group.name}</h3>
               <p className="mt-3 text-sm leading-relaxed text-ink/60">{group.note}</p>
-              <dl className="mt-6 space-y-2 text-sm">
+              <dl className="mt-6 space-y-4 text-sm">
                 {group.rows.map((row) => (
-                  <div key={row.key} className="flex items-baseline gap-3">
-                    <dt className="text-ink/70">{row.name}</dt>
-                    <span className="rule mt-auto h-px flex-1 border-b border-current" />
-                    <dd
-                      className={
-                        row.qty ? "font-medium tabular-nums text-saffron" : "text-xs text-ink/35"
-                      }
-                    >
-                      {row.qty ?? pendingLabel}
-                    </dd>
+                  <div key={row.key} className="flex items-center gap-4">
+                    {row.image && (
+                      <Image
+                        src={row.image}
+                        alt=""
+                        width={224}
+                        height={224}
+                        sizes="(min-width: 640px) 112px, 80px"
+                        className="size-20 shrink-0 rounded-full object-cover sm:size-28"
+                      />
+                    )}
+                    <div className="flex flex-1 flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-3">
+                      <dt className="text-ink/70">{row.name}</dt>
+                      <span className="rule hidden h-px flex-1 border-b border-current sm:block" />
+                      <dd
+                        className={
+                          row.qty ? "font-medium tabular-nums text-saffron" : "text-xs text-ink/35"
+                        }
+                      >
+                        {row.qty ?? pendingLabel}
+                      </dd>
+                    </div>
                   </div>
                 ))}
               </dl>
