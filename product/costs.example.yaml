@@ -1,0 +1,111 @@
+# Soraya cost inputs — TEMPLATE
+#
+# Copy to costs.yaml and fill in. costs.yaml is gitignored: it holds your real
+# margins and supplier terms, which do not belong in a repo that may become public.
+#
+# Nothing here can be researched. These are your numbers. Until they exist, the
+# pricing skill can build the model but cannot produce a price.
+#
+# Leave a value as null rather than guessing. A null blocks the calculation and
+# says so; a guess produces a confident wrong price.
+
+currency:
+  base: OMR              # what you quote in
+  landedCostIn: IRR      # what you buy in
+  fxRate: null           # IRR per 1 OMR on the day you costed. Date it.
+  fxDate: null           # YYYY-MM-DD
+  fxNote: >
+    The rial moves fast. Any quote older than this date is not a quote.
+    Re-cost before honouring a price you gave more than a month ago.
+
+# ---------------------------------------------------------------------------
+# What the goods cost you, delivered to your hands in Iran, before export.
+# ---------------------------------------------------------------------------
+componentCosts:
+  saffron-negin:
+    perMesghal: null
+    source: null          # own farm / bought in — say which
+    note: >
+      If it comes off your aunt's land, this is still not zero. Cost it at what
+      you would otherwise sell it for. A house that prices its own crop at zero
+      cannot tell a good year from a bad one.
+  saffron-powder:
+    perGram: null
+    note: Same lot as saffron-negin, plus grinding and loss. Expect a small yield loss.
+  kakuti-powder:
+    perGram: null
+  kakuti-leaf:
+    perGram: null         # leave null — derived as 0.9 x kakuti-powder per the agreed rule
+    derived: true
+  rose-buds:
+    perGram: null
+  rose-petals:
+    perGram: null
+
+# ---------------------------------------------------------------------------
+# Packaging, per unit, at the MOQ you actually intend to order.
+# Rigid drawer boxes typically MOQ at 100+; unit price falls steeply with volume,
+# so a cost without a quantity attached is meaningless.
+# ---------------------------------------------------------------------------
+packagingCosts:
+  drawer-cube:
+    perUnit: null
+    atQuantity: null
+    vendor: null
+    leadTimeDays: null    # 10-15 working days after artwork approval is typical
+    toolingOneOff: null   # dies, plates, sampling — amortise across the first run
+  slim-sleeve:
+    perUnit: null
+    atQuantity: null
+  carton:
+    perUnit: null
+    atQuantity: null
+  teabagMaterials:
+    perBag: null          # filter paper, tag, thread, overwrap
+  innerPackaging:
+    saffronVial: null     # glass or tin, per unit
+    pouches: null         # per pouch, all herb drawers
+    labels: null          # per SKU set, including the Arabic label
+
+# ---------------------------------------------------------------------------
+# Getting it from Zanjan to a buyer in Oman.
+# ---------------------------------------------------------------------------
+logistics:
+  fillingLabourPerBox: null
+  inlandIranPerShipment: null
+  freightPerShipment: null
+  freightMode: null            # air / sea / consolidated
+  unitsPerShipment: null       # needed to spread the per-shipment costs
+  customsDutyPct: null         # GCC common external tariff on the relevant HS heading
+  clearanceFees: null
+  omanVatPct: 5                # Oman VAT, standard rate. Confirm your registration status.
+  certificationCosts: null     # certificate of origin, phytosanitary, lab test, health cert
+
+# ---------------------------------------------------------------------------
+# What the market told you. You already have some of this.
+# ---------------------------------------------------------------------------
+market:
+  omaniBuyerMinimumMesghal: 100
+  omaniBuyerQuotes: []
+    # - buyer: null
+    #   date: null
+    #   productDiscussed: null
+    #   pricePerMesghal: null
+    #   terms: null           # payment, exclusivity, who holds stock
+    #   note: null
+  competitorShelfPrices: []
+    # - where: null           # shop or site in Muscat
+    #   product: null
+    #   grade: null
+    #   pricePerGram: null
+    #   date: null
+
+# ---------------------------------------------------------------------------
+# What you need out of it.
+# ---------------------------------------------------------------------------
+targets:
+  wholesaleMarginPct: null     # your margin selling to an Omani trader
+  retailMarginPct: null        # if you sell direct
+  traderMarginExpectationPct: null   # what the trader needs to take, or they walk
+  minimumOrderValue: null
+  paymentTerms: null

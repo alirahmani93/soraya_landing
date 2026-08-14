@@ -1,0 +1,36 @@
+{
+  "$comment": "Brand constants. The landing page and every generated image brief read this. Palette is derived from the three products themselves, so the site and the physical box read as one system.",
+  "schemaVersion": 1,
+  "name": { "en": "Soraya", "ar": "ثريا", "fa": "ثریا" },
+  "meaning": "Soraya / Thurayya is the Arabic and Persian name for the Pleiades star cluster. It carries in both languages, which is rare and worth leaning on: a cluster of small bright things presented together is the box.",
+  "positioning": "Single-origin Zanjan saffron, presented with two companion crops from the same soil, in a package good enough to give as a gift without rewrapping.",
+  "markets": ["OM", "AE", "SA", "QA", "KW", "BH"],
+  "locales": {
+    "ar": { "dir": "rtl", "default": true },
+    "en": { "dir": "ltr", "default": false }
+  },
+  "localeNote": "Arabic is the primary market language and the default locale. English is the second. Persian is NOT a shipping locale — it is the language of the internal brief only.",
+  "palette": {
+    "saffronRed": { "hex": "#C1440E", "from": "Dried Negin stigma", "role": "primary accent, calls to action" },
+    "saffronGold": { "hex": "#E3A21C", "from": "Saffron infusion in water", "role": "highlights, rules, active states" },
+    "kakutiGreen": { "hex": "#7D8C6A", "from": "Dried Ziziphora leaf", "role": "secondary, calm surfaces" },
+    "kakutiPale": { "hex": "#A8B394", "from": "Ziziphora underside", "role": "muted text on dark, borders" },
+    "roseDusk": { "hex": "#B4687C", "from": "Damask rose bud", "role": "tertiary accent" },
+    "rosePale": { "hex": "#E5C3C8", "from": "Damask rose petal, sun-faded", "role": "soft fills, section washes" },
+    "paper": { "hex": "#F6EFE2", "from": "Undyed board", "role": "page background" },
+    "ink": { "hex": "#241C17", "from": "Roasted stigma", "role": "body text, dark sections" }
+  },
+  "paletteRule": "Saffron red and gold carry the brand; kakuti green and rose are supporting and must never out-shout them. In any one view use at most two of the three product colors at full strength.",
+  "contact": {
+    "whatsapp": "96893359802",
+    "telegram": "+96893359802",
+    "email": "fatemehsmardani@gmail.com",
+    "phoneOm": "+96893359802",
+    "note": "One Omani number serves phone, WhatsApp and Telegram. WhatsApp takes the number without a plus; Telegram and tel: keep it."
+  },
+  "company": {
+    "sellingEntity": "Omani company (owner's family)",
+    "productionOrigin": "Family farm, Zanjan, Iran",
+    "note": "Goods originate in Iran and are sold through the Omani entity. This split matters for country-of-origin labelling and for how the story is told — see the trader and seller skills."
+  }
+}

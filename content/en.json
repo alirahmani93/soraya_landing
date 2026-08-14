@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "title": "Soraya — Saffron from Zanjan",
+    "description": "Negin saffron, kakuti and Damask rose from one family farm in Zanjan, in a drawer box. Sold from Oman."
+  },
+  "nav": {
+    "brand": "Soraya",
+    "switch": "العربية",
+    "switchLabel": "Switch to Arabic"
+  },
+  "hero": {
+    "eyebrow": "From the family farm — Zanjan, Iran",
+    "title": ["One farm.", "Three harvests.", "One box."],
+    "lede": "Negin saffron, kakuti and Damask rose. The same soil, in a box that opens one drawer at a time.",
+    "scroll": "Scroll to open the box"
+  },
+  "drawers": {
+    "saffron": {
+      "name": "Saffron",
+      "note": "Long unbroken Negin threads, from a single harvest."
+    },
+    "kakuti": {
+      "name": "Kakuti",
+      "note": "Persian mountain mint. Ground, and as whole leaf."
+    },
+    "rose": {
+      "name": "Damask rose",
+      "note": "Closed buds and loose petals, for infusion and for garnish."
+    },
+    "tea": {
+      "name": "Tea bags",
+      "note": "All three together: ground saffron, kakuti leaf, rose petals."
+    }
+  },
+  "specs": {
+    "heading": "What is in the box",
+    "lede": "Four boxes. Pick one to see what it holds.",
+    "pending": "not set",
+    "tiers": { "flagship": "Flagship", "mid": "Middle", "entry": "Entry" },
+    "descriptions": {
+      "soraya": "All four drawers, in a cube that opens layer by layer. The most we make.",
+      "lady-with-taste": "All three crops together, without the drawers and without the tea bags.",
+      "iran": "Saffron and nothing else, in a slim sleeve with the same board and print.",
+      "peace": "The tea bags on their own. The lightest thing we make, and the easiest to try."
+    }
+  },
+  "origin": {
+    "heading": "Zanjan",
+    "body": [
+      "Saffron wants a dry summer, a cold winter, and hands to pick the flower before the sun is up. This farm in Zanjan gives that, and gives two more crops from the same soil: kakuti, a mountain mint Iranian households have brewed for generations, and Damask rose.",
+      "The box puts all three together in the form they are actually used in — not an assortment bought from three traders, but one piece of land's harvest."
+    ],
+    "caption": "A saffron field at picking season."
+  },
+  "contact": {
+    "heading": "Talk to us",
+    "lede": "There is no cart here. Write to us directly and we will answer.",
+    "pending": "Contact channels not added yet.",
+    "labels": {
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "email": "Email",
+      "phone": "Oman phone"
+    }
+  },
+  "footer": {
+    "line": "Soraya — grown in Zanjan, sold from Oman.",
+    "placeholder": "Images shown are placeholders and will be replaced with photographs of the product itself."
+  }
+}

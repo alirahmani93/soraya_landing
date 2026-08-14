@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+@theme {
+  --color-saffron: #c1440e;
+  --color-gold: #e3a21c;
+  --color-kakuti: #7d8c6a;
+  --color-kakuti-pale: #a8b394;
+  --color-rose: #b4687c;
+  --color-rose-pale: #e5c3c8;
+  --color-paper: #f6efe2;
+  --color-paper-deep: #ece2d1;
+  --color-ink: #241c17;
+  --color-ink-soft: #3a2f27;
+
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-tajawal), system-ui, sans-serif;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+.display {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-variation-settings: "SOFT" 40, "WONK" 1, "opsz" 120;
+  letter-spacing: -0.02em;
+}
+
+[lang="ar"] .display {
+  font-family: var(--font-aref), Georgia, serif;
+  font-variation-settings: normal;
+  letter-spacing: 0;
+  line-height: 1.45;
+}
+
+.rule {
+  border-color: color-mix(in srgb, currentColor 18%, transparent);
+}
+
+/* ---------- the box ---------- */
+
+.stage {
+  --p: 0;
+  --dir: 1;
+  /* Box width x (1 + travel) must stay inside the stage container, or drawers leave the screen. */
+  --travel: 66%;
+}
+
+[dir="rtl"] .stage {
+  --dir: -1;
+}
+
+.box {
+  perspective: 1400px;
+}
+
+.box-body {
+  transform: rotateX(4deg) rotateY(calc(var(--dir) * -5deg));
+  transform-style: preserve-3d;
+}
+
+.drawer {
+  --o: clamp(0, calc((var(--p) - var(--start)) / 0.2), 1);
+  transform: translateX(calc(var(--o) * var(--dir) * var(--travel)));
+  will-change: transform;
+}
+
+.drawer-label {
+  opacity: clamp(0, calc((var(--p) - var(--start) - 0.08) / 0.08), 1);
+}
+
+/* A closed drawer is inside the box, so it is in shadow. Lit only as it emerges. */
+.drawer-dim {
+  opacity: calc(0.88 - var(--o) * 0.82);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .stage {
+    --p: 1;
+  }
+  .drawer {
+    transition: none;
+  }
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}

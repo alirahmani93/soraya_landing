@@ -1,0 +1,149 @@
+{
+  "$comment": "Single source of truth for what Soraya sells. Every skill and the landing page read this file. Change a drawer here, not in five places.",
+  "schemaVersion": 1,
+  "units": {
+    "mesghal": {
+      "symbol": "mesghal",
+      "grams": 4.608,
+      "note": "Iranian mesghal-e sharie. Saffron in Iran is traded in mesghal, not grams. Always store saffron quantities in mesghal and derive grams; never round-trip through grams."
+    },
+    "gram": { "symbol": "g", "grams": 1 },
+    "piece": { "symbol": "pc", "grams": null }
+  },
+  "components": {
+    "saffron-negin": {
+      "name": { "en": "Negin saffron", "ar": "زعفران نجين", "fa": "زعفران نگین" },
+      "botanical": "Crocus sativus L. (stigma)",
+      "origin": "Zanjan, Iran",
+      "unit": "mesghal",
+      "hsCode": "0910.20",
+      "grade": "ISO 3632 Category I target",
+      "notes": "Long unbroken threads including the upper stigma. Highest visual grade of the three red trims; this is the drawer the customer opens first."
+    },
+    "saffron-powder": {
+      "name": { "en": "Ground saffron", "ar": "زعفران مطحون", "fa": "پودر زعفران" },
+      "botanical": "Crocus sativus L. (stigma, ground)",
+      "origin": "Zanjan, Iran",
+      "unit": "gram",
+      "hsCode": "0910.20",
+      "notes": "Used only inside tea bags. Deliberately the same lot as saffron-negin, ground — the box carries one saffron grade in inventory, not two."
+    },
+    "kakuti-powder": {
+      "name": { "en": "Kakuti powder", "ar": "مسحوق الككوتي", "fa": "پودر کاکوتی" },
+      "botanical": "Ziziphora spp. (Lamiaceae)",
+      "origin": "Zanjan, Iran",
+      "unit": "gram",
+      "hsCode": "1211.90",
+      "notes": "Persian mountain mint. Aromatic between mint and thyme; traditionally digestive and carminative."
+    },
+    "kakuti-leaf": {
+      "name": { "en": "Kakuti whole leaf", "ar": "أوراق الككوتي", "fa": "برگ کاکوتی" },
+      "botanical": "Ziziphora spp. (Lamiaceae)",
+      "origin": "Zanjan, Iran",
+      "unit": "piece",
+      "hsCode": "1211.90",
+      "costRule": "0.9x-of:kakuti-powder",
+      "notes": "Costed at 0.9x the per-gram price of kakuti-powder. This is a deliberate simplification agreed by the owner, not a measured figure — see pricing skill."
+    },
+    "rose-buds": {
+      "name": { "en": "Damask rose buds", "ar": "براعم الورد الدمشقي", "fa": "غنچه گل محمدی" },
+      "botanical": "Rosa × damascena Mill.",
+      "origin": "Iran",
+      "unit": "gram",
+      "hsCode": "1211.90",
+      "notes": "Whole closed buds. The visual hero of the rose drawer — buds photograph far better than petals."
+    },
+    "rose-petals": {
+      "name": { "en": "Damask rose petals", "ar": "بتلات الورد الدمشقي", "fa": "برگ گل محمدی" },
+      "botanical": "Rosa × damascena Mill.",
+      "origin": "Iran",
+      "unit": "gram",
+      "hsCode": "1211.90",
+      "notes": "Loose dried petals, for infusion and garnish."
+    }
+  },
+  "assemblies": {
+    "soraya-teabag": {
+      "name": { "en": "Soraya blend tea bag", "ar": "كيس شاي ثريا", "fa": "تی‌بگ ثریا" },
+      "unit": "piece",
+      "hsCode": "0902.40",
+      "hsCodeNote": "Blended herbal infusion containing no Camellia sinensis may classify under 1211.90 instead. Confirm with the Omani customs broker before the first shipment — the two headings carry different duty treatment.",
+      "billOfMaterials": [
+        { "component": "saffron-powder", "qty": null, "unit": "gram" },
+        { "component": "kakuti-leaf", "qty": null, "unit": "gram" },
+        { "component": "rose-petals", "qty": null, "unit": "gram" }
+      ],
+      "notes": "Per-bag fill weights are NOT yet decided. Typical infusion bag is 1.5-2.5 g total. Owner to set the ratio; until then treat qty as unknown rather than guessing."
+    }
+  },
+  "packaging": {
+    "drawer-cube": {
+      "name": { "en": "Drawer cube", "ar": "صندوق الأدراج", "fa": "جعبه کشویی" },
+      "form": "Rigid cube that opens to reveal stacked sliding drawers, in the manner of a Japanese jubako / sushi presentation box.",
+      "tier": "flagship",
+      "drawers": 4,
+      "dimensionsMm": null,
+      "notes": "Most expensive and most presentable format. Dimensions unset — they follow from the six fill volumes, so decide contents first, box second. See packaging skill."
+    },
+    "slim-sleeve": {
+      "name": { "en": "Slim sleeve", "ar": "علبة انزلاقية", "fa": "جعبه کشویی باریک" },
+      "form": "Single-drawer rigid sleeve, same materials and print as the cube.",
+      "tier": "mid",
+      "drawers": 1,
+      "dimensionsMm": null
+    },
+    "carton": {
+      "name": { "en": "Printed carton", "ar": "علبة كرتون مطبوعة", "fa": "جعبه مقوایی" },
+      "form": "Folding carton, litho-printed, no rigid board.",
+      "tier": "entry",
+      "drawers": 0,
+      "dimensionsMm": null
+    }
+  },
+  "skus": {
+    "soraya": {
+      "name": { "en": "Soraya", "ar": "ثريا", "fa": "ثریا" },
+      "nameNote": "The flagship carries the house name. Every other SKU is named after something it is about, never after what it lacks.",
+      "tier": "flagship",
+      "packaging": "drawer-cube",
+      "status": "specified",
+      "contents": [
+        { "component": "saffron-negin", "qty": 2, "unit": "mesghal" },
+        { "component": "kakuti-powder", "qty": 30, "unit": "gram" },
+        { "component": "kakuti-leaf", "qty": [10, 30], "unit": "piece" },
+        { "component": "rose-buds", "qty": 20, "unit": "gram" },
+        { "component": "rose-petals", "qty": 20, "unit": "gram" },
+        { "assembly": "soraya-teabag", "qty": 20, "unit": "piece" }
+      ],
+      "notes": "kakuti-leaf quantity is a range in the owner's brief. A range cannot be costed or label-declared — resolve to a single count (or a declared net weight) before quoting."
+    },
+    "lady-with-taste": {
+      "name": { "en": "Lady with Taste", "ar": "سيدة الذوق", "fa": "بانوی خوش‌ذوق" },
+      "tier": "mid",
+      "packaging": "slim-sleeve",
+      "status": "proposed",
+      "contents": [
+        { "component": "saffron-negin", "qty": 2, "unit": "mesghal" },
+        { "component": "kakuti-powder", "qty": 20, "unit": "gram" },
+        { "component": "rose-buds", "qty": 20, "unit": "gram" }
+      ],
+      "notes": "All three crops without the drawer cube and without the tea bags. Sits directly under the flagship, so its size and price must be set together with Soraya's or it cannibalises rather than laddering."
+    },
+    "iran": {
+      "name": { "en": "Iran", "ar": "إيران", "fa": "ایران" },
+      "tier": "mid",
+      "packaging": "slim-sleeve",
+      "status": "proposed",
+      "contents": [{ "component": "saffron-negin", "qty": 2, "unit": "mesghal" }],
+      "notes": "Saffron and nothing else — for the buyer who wants the spice, not the story. Also the price anchor. Natural sizes are 1 and 2 mesghal; anchor against Soraya so the flagship still reads as the better value per mesghal."
+    },
+    "peace": {
+      "name": { "en": "Peace", "ar": "سلام", "fa": "صلح" },
+      "tier": "entry",
+      "packaging": "carton",
+      "status": "proposed",
+      "contents": [{ "assembly": "soraya-teabag", "qty": 25, "unit": "piece" }],
+      "notes": "Lowest barrier to a first order and the only SKU cheap enough to give away as a sample. Counts of 12 or 20 are conventional."
+    }
+  }
+}
