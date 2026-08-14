@@ -71,22 +71,14 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
       </header>
 
       <main>
-        <section className="relative flex min-h-screen items-end bg-ink px-6 pb-20 pt-32 text-paper sm:px-10">
-          <div className="mx-auto w-full max-w-6xl">
-            <p className="text-xs uppercase tracking-[0.3em] text-gold">{t.hero.eyebrow}</p>
-            <h1 className="display mt-8 text-[clamp(2.6rem,9vw,7rem)] leading-[0.95]">
-              {t.hero.title.map((line, i) => (
-                <span key={i} className="block">
-                  {line}
-                </span>
-              ))}
-            </h1>
-            <p className="mt-10 max-w-xl text-lg leading-relaxed text-paper/70">{t.hero.lede}</p>
-          </div>
-        </section>
-
         <Suspense fallback={<div className="h-screen bg-ink" />}>
-          <HeroSwitch drawers={stageDrawers} hint={t.hero.scroll} mark={t.nav.brand} />
+          <HeroSwitch
+            drawers={stageDrawers}
+            hint={t.hero.scroll}
+            mark={t.nav.brand}
+            eyebrow={t.hero.eyebrow}
+            lines={t.hero.title}
+          />
         </Suspense>
 
         <section className="bg-paper px-6 py-28 sm:px-10">

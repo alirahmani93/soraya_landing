@@ -4,3 +4,30 @@
 [   33914ms] [LOG] [HMR] connected @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
 [   37120ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
 [   37142ms] [LOG] [HMR] connected @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 4715996ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 4716025ms] [LOG] [Fast Refresh] done in 3ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 4722915ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 4723020ms] [LOG] [Fast Refresh] done in 8ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 4723050ms] TypeError: Cannot read properties of undefined (reading 'map')
+    at HeroVideo (http://localhost:3001/_next/static/chunks/components_0ak7_dl._.js?id=%255Bproject%255D/components/HeroVideo.tsx+%255Bapp-client%255D+(ecmascript):81:41)
+    at Object.react_stack_bottom_frame (http://localhost:3001/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:14894:24)
+    at renderWithHooks (http://localhost:3001/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:4425:24)
+    at updateFunctionComponent (http://localhost:3001/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:5892:21)
+    at beginWork (http://localhost:3001/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6518:24)
+    at runWithFiberInDEV (http://localhost:3001/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:761:74)
+    at performUnitOfWork (http://localhost:3001/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9385:97)
+    at workLoopSync (http://localhost:3001/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9279:40)
+    at renderRootSync (http://localhost:3001/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9263:13)
+    at performWorkOnRoot (http://localhost:3001/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:8928:47)
+    at performSyncWorkOnRoot (http://localhost:3001/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10093:9)
+    at flushSyncWorkAcrossRoots_impl (http://localhost:3001/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10009:316)
+    at processRootScheduleInMicrotask (http://localhost:3001/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10030:106)
+    at http://localhost:3001/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10104:158
+[ 4723126ms] [LOG] [Fast Refresh] done in 8ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 4730693ms] [LOG] [Fast Refresh] done in 7717ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 4730908ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 4730922ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3001/videos/soraya-hero.mp4:0
+[ 4730934ms] [LOG] [HMR] connected @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 4779109ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3001/videos/soraya-hero.mp4:0
+[ 4779118ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[ 4779154ms] [LOG] [HMR] connected @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
