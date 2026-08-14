@@ -110,17 +110,41 @@ Next.js/Vercel questions to the installed `vercel:*` skills instead of restating
 - `/ar` is the default locale and `/` redirects to it. Arabic is written first; English is the
   second copy, not the source. RTL uses logical properties — never `left`/`right`.
 - The signature interaction is the sticky drawer box in `components/Stage.tsx`. Scroll progress is
-  written once per frame as a `--p` custom property and every drawer transform is derived from it
-  in CSS, so React does not re-render during the scroll.
+  written once per frame as a `--p` custom property and every transform derives from it in CSS, so
+  React does not re-render during the scroll.
+- **The box is real CSS 3D**, not a layered 2D fake: every surface is a plane in one `preserve-3d`
+  context and drawers pull along Z, toward the viewer. Two rules that are easy to get backwards
+  and hard to debug from a screenshot:
+  - The camera needs a **negative** `rotateX` to look *down* into the box. Positive looks up at it.
+  - A horizontal surface that faces up must be `translateZ(-depth) rotateX(90deg)`. Using
+    `rotateX(-90deg)` puts the plane in the same place with its normal pointing down, which is
+    invisible once backfaces are culled — and backfaces must be culled, or the box's underside and
+    far wall render on top of the drawers.
+- Drawers open **one at a time**, in explicit phases: open over `RAMP`, hold, shut over `RAMP`,
+  then a short gap with the box closed before the next starts. Overlapping the phases leaves a
+  moment with a half-open drawer under a half-faded caption, which reads as broken — most visibly
+  when scrolling back up. Each caption's fade window matches its drawer's exactly. After the last
+  drawer, all four step out together as a finale.
+- Drawer contents ride up as the drawer opens so the product clears the drawer walls.
+- **The flat hero is the default** — flat photographic bands sliding sideways,
+  `components/StageFlat.tsx`. **`?hero=3d`** serves the CSS 3D box (`components/Stage.tsx`) for
+  comparison. Read client-side via `useSearchParams` inside a `Suspense` boundary so both locales
+  stay statically rendered. Everything below about the 3D box applies to that variant.
 - Drawers open in the physical box's order: saffron, kakuti, rose, tea. Changing that here means
   changing it in the box.
-- Box geometry constraint: box width × (1 + `--travel`) must stay inside the stage container, or
-  drawers slide off-screen on narrow viewports.
+- Drawers run flush with the box sides. Inset them and the channel either side shows the interior
+  through the closed front, so it stops reading as a closed box.
 - Contact is direct-to-owner, not checkout. One Omani number serves phone, WhatsApp and Telegram.
   A `null` in `brand.contact` renders as nothing — never as a dead link or a placeholder number.
 - "What is in the box" is paginated by SKU: tabs of package names, contents grouped the way the
   flagship's drawers group them. Groups a SKU does not carry are dropped, so `iran` renders one
   card. Undecided quantities render as the pending label, not as a guess.
+- The enquiry form (`components/Enquiry.tsx`) is a native `<dialog>` opened from two places: under
+  the packages tabs, where it preselects the open tab, and in the contact section. **It composes a
+  `mailto:` — there is no server and nothing is sent from the site.** A real send needs an email
+  provider and an API key; until then the copy says plainly that submitting opens the visitor's
+  mail app, and there is a copy-to-clipboard fallback for anyone without one. Tailwind's preflight
+  zeroes the margin a native dialog uses to centre itself, so the centring is explicit.
 - All imagery in `public/images/` is placeholder stock; see its `ATTRIBUTION.md`. There is no
   photograph of the box because the box does not exist yet — it is drawn in CSS.
 

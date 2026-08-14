@@ -47,41 +47,276 @@ body {
   border-color: color-mix(in srgb, currentColor 18%, transparent);
 }
 
-/* ---------- the box ---------- */
+/* ---------- the box ----------
+   A real CSS 3D jubako: every surface is a plane in one preserve-3d context and the
+   drawers pull along Z, toward the viewer. Closed, it is a solid cube. Open, you look
+   down into each drawer. Scroll writes --p once per frame; everything else derives. */
 
 .stage {
   --p: 0;
   --dir: 1;
-  /* Box width x (1 + travel) must stay inside the stage container, or drawers leave the screen. */
-  --travel: 66%;
+
+  --s: clamp(190px, min(42vh, 40vw), 470px);
+  --w: var(--s);
+  /* Wider than tall, and deep. Cube proportions read as a gift box; taller than wide
+     reads as furniture. */
+  --h: calc(var(--s) * 0.96);
+  --d: calc(var(--s) * 0.88);
+  --wall: calc(var(--s) * 0.035);
+  --gap: calc(var(--s) * 0.007);
+  --dh: calc((var(--h) - 2 * var(--wall) - 3 * var(--gap)) / 4);
+  /* Drawers run flush with the box sides. Inset them and the channel either side shows
+     the interior through the closed front, which stops it reading as a closed box. */
+  --dw: var(--w);
+  --dd: calc(var(--d) - var(--wall));
+  --pull: calc(var(--d) * 0.86);
+
+  --board: linear-gradient(160deg, #fbf6ec 0%, var(--color-paper) 42%, #e4d8c2 100%);
 }
 
 [dir="rtl"] .stage {
   --dir: -1;
 }
 
-.box {
-  perspective: 1400px;
+/* Rotation and perspective push the rendered box well outside its layout box, so the
+   scene is sized larger than the box or it overlaps the captions beside it. */
+.scene {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: calc(var(--w) * 1.5);
+  height: calc(var(--h) * 1.55);
+  perspective: calc(var(--s) * 5.8);
+  perspective-origin: 50% 38%;
 }
 
-.box-body {
-  transform: rotateX(4deg) rotateY(calc(var(--dir) * -5deg));
+.box3d {
+  position: relative;
+  width: var(--w);
+  height: var(--h);
   transform-style: preserve-3d;
+  /* Settles from near front-on into a three-quarter view over the first few percent
+     of the scroll, so the object reads as being picked up rather than as a diagram. */
+  /* Negative X tips the lid toward the viewer: we look down into the box, not up at it. */
+  transform: translateZ(calc(var(--d) * -0.5))
+    rotateX(calc(-1 * (16deg + clamp(0, calc(var(--p) / 0.12), 1) * 10deg)))
+    rotateY(calc(var(--dir) * -1 * (9deg + clamp(0, calc(var(--p) / 0.12), 1) * 16deg)));
+  will-change: transform;
 }
 
-.drawer {
+.face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0 0;
+  background: var(--board);
+  /* Cull the surfaces we are looking at from behind. Without this the box's underside
+     and far wall render on top of the drawers. */
+  backface-visibility: hidden;
+}
+
+/* The interior is lined board in shadow, not a void. */
+.face-back {
+  width: var(--w);
+  height: var(--h);
+  transform: translateZ(calc(-1 * var(--d)));
+  filter: brightness(0.34);
+}
+.face-left {
+  width: var(--d);
+  height: var(--h);
+  transform: rotateY(90deg);
+  filter: brightness(0.74);
+}
+.face-right {
+  width: var(--d);
+  height: var(--h);
+  transform: translateX(var(--w)) rotateY(90deg);
+  filter: brightness(0.74);
+}
+/* Horizontal planes: translate to the back edge first, then rotateX(90deg), so the
+   surface extends toward the viewer and its normal points up. rotateX(-90deg) would
+   put the plane in the right place with its normal pointing down — invisible once
+   backfaces are culled. */
+.face-top {
+  width: var(--w);
+  height: var(--d);
+  transform: translateZ(calc(-1 * var(--d))) rotateX(90deg);
+  filter: brightness(1.05);
+  display: grid;
+  place-items: center;
+}
+.face-bottom {
+  width: var(--w);
+  height: var(--d);
+  transform: translateY(var(--h)) translateZ(calc(-1 * var(--d))) rotateX(90deg);
+  filter: brightness(0.42);
+}
+
+/* Printed on the lid. The single thing that separates a gift box from a filing cabinet. */
+.lid-mark {
+  color: color-mix(in srgb, var(--color-saffron) 78%, #6b2c0a);
+  font-size: calc(var(--s) * 0.16);
+  letter-spacing: 0.06em;
+  /* Aref Ruqaa's flourishes clip at line-height 1. */
+  line-height: 1.7;
+  white-space: nowrap;
+  opacity: 0.85;
+}
+
+/* The front rim. Gives the opening a visible board thickness the drawers sit inside. */
+.rim-top {
+  width: var(--w);
+  height: var(--wall);
+}
+.rim-bottom {
+  width: var(--w);
+  height: var(--wall);
+  transform: translateY(calc(var(--h) - var(--wall)));
+}
+
+.drawer3d {
+  /* One drawer at a time, in three explicit phases: open over --ramp, hold fully open
+     until --close, shut over --ramp. Each drawer finishes shutting before the next
+     starts opening, so there is never a moment with two half-open drawers and no
+     caption — that in-between state is what reads as broken, especially scrolling up. */
+  --bump: min(
+    clamp(0, calc((var(--p) - var(--start)) / var(--ramp)), 1),
+    clamp(0, calc((var(--close) + var(--ramp) - var(--p)) / var(--ramp)), 1)
+  );
+  /* Finale: after the last drawer, all four step out together. */
+  --fin: calc(clamp(0, calc((var(--p) - var(--finale)) / 0.08), 1) * (1 - var(--i) * 0.15));
+  --o: max(var(--bump), var(--fin));
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--dw);
+  height: var(--dh);
+  transform-style: preserve-3d;
+  transform: translate3d(
+    0,
+    calc(var(--wall) + var(--i) * (var(--dh) + var(--gap))),
+    calc(var(--o) * var(--pull))
+  );
+  will-change: transform;
+}
+
+.drawer-front {
+  width: var(--dw);
+  height: var(--dh);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -1px 2px rgba(93, 66, 40, 0.28);
+}
+
+/* A recessed pull, not a painted stripe. */
+.drawer-pull {
+  position: absolute;
+  inset-inline: 40%;
+  top: 50%;
+  height: calc(var(--dh) * 0.16);
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(93, 66, 40, 0.5), rgba(93, 66, 40, 0.12));
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+/* The contents ride up as the drawer comes out and settle back as it shuts — a riser,
+   so the product clears the drawer walls instead of sitting in their shadow. */
+.drawer-floor {
+  width: var(--dw);
+  height: var(--dd);
+  transform: translateY(calc(var(--dh) - var(--o) * var(--dh) * 0.5))
+    translateZ(calc(-1 * var(--dd))) rotateX(90deg);
+  overflow: hidden;
+  background: #17110d;
+}
+.drawer-back {
+  width: var(--dw);
+  height: var(--dh);
+  transform: translateZ(calc(-1 * var(--dd)));
+  filter: brightness(0.55);
+}
+/* Drawer interiors sit well below the board outside, so the eye lands on the contents
+   rather than on the walls around them. */
+.drawer-left {
+  width: var(--dd);
+  height: var(--dh);
+  transform: rotateY(90deg);
+  filter: brightness(0.62);
+}
+.drawer-right {
+  width: var(--dd);
+  height: var(--dh);
+  transform: translateX(var(--dw)) rotateY(90deg);
+  filter: brightness(0.62);
+}
+
+/* Inside the box a drawer is in shadow; it is lit only as it comes out. */
+.drawer-shade {
+  opacity: calc(0.9 - var(--o) * 0.9);
+}
+
+/* Dried botanicals photograph dark, and the placeholder stock has a lot of surface
+   around the product. Brighten and crop in so the drawer reads at a glance. */
+.drawer-floor img {
+  filter: brightness(1.22) saturate(1.06);
+  transform: scale(1.3);
+}
+
+.box-shadow-pad {
+  position: absolute;
+  z-index: -1;
+  inset-inline: -18%;
+  bottom: 4%;
+  height: calc(var(--w) * 0.3);
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.7), transparent 66%);
+  filter: blur(14px);
+}
+
+/* Fades on the same schedule as its drawer, so the text always names what is open. */
+.caption {
+  --vis: min(
+    clamp(0, calc((var(--p) - var(--a)) / 0.04), 1),
+    clamp(0, calc((var(--b) - var(--p)) / 0.04), 1)
+  );
+  opacity: var(--vis);
+  transform: translateY(calc((1 - var(--vis)) * 14px));
+}
+
+.scroll-hint {
+  opacity: clamp(0, calc(1 - var(--p) * 8), 1);
+}
+
+/* ---------- the first hero, kept for comparison at ?hero=flat ---------- */
+
+.stage-flat {
+  --travel: 66%;
+}
+
+.flat-drawer {
   --o: clamp(0, calc((var(--p) - var(--start)) / 0.2), 1);
   transform: translateX(calc(var(--o) * var(--dir) * var(--travel)));
   will-change: transform;
 }
 
-.drawer-label {
+.flat-label {
   opacity: clamp(0, calc((var(--p) - var(--start) - 0.08) / 0.08), 1);
 }
 
-/* A closed drawer is inside the box, so it is in shadow. Lit only as it emerges. */
-.drawer-dim {
+.flat-dim {
   opacity: calc(0.88 - var(--o) * 0.82);
+}
+
+/* No caption column beside the box on a phone, so the box takes the full width and
+   its 3D overflow is free to run past the scene's own bounds. */
+@media (max-width: 767px) {
+  .stage {
+    --s: clamp(190px, min(30vh, 68vw), 470px);
+  }
+  .scene {
+    width: 100%;
+    height: calc(var(--h) * 1.3);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -91,8 +326,17 @@ body {
   .stage {
     --p: 1;
   }
-  .drawer {
-    transition: none;
+  /* No sequence to follow, so show the open box and every caption at once. */
+  .caption {
+    position: static;
+    opacity: 1;
+    transform: none;
+  }
+  .caption + .caption {
+    margin-top: 1.5rem;
+  }
+  .scroll-hint {
+    display: none;
   }
 }
 

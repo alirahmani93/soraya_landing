@@ -52,6 +52,27 @@
     ],
     "caption": "A saffron field at picking season."
   },
+  "enquiry": {
+    "ctaPackage": "Ask about this box",
+    "ctaContact": "Send us a message",
+    "title": "Ask about an order",
+    "lede": "Tell us what you are after and we will answer. Sending opens your email app with the message already written.",
+    "fields": {
+      "name": "Your name",
+      "email": "Your email",
+      "phone": "Phone or WhatsApp",
+      "optional": "optional",
+      "package": "Which box",
+      "quantity": "How many",
+      "message": "Anything else"
+    },
+    "submit": "Open email",
+    "copy": "Copy the message instead",
+    "copied": "Copied",
+    "close": "Close",
+    "to": "Goes to",
+    "subject": "Soraya enquiry"
+  },
   "contact": {
     "heading": "Talk to us",
     "lede": "There is no cart here. Write to us directly and we will answer.",

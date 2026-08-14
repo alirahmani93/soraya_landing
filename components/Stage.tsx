@@ -11,10 +11,36 @@ export type StageDrawer = {
   qty: string;
 };
 
-const STEP = 0.18;
-const FIRST = 0.1;
+/* Scroll budget per drawer: open over RAMP, hold open for HOLD, shut over RAMP, then a
+   short GAP with the box closed before the next one starts. Keeping the phases explicit
+   is what stops a half-open drawer from ever sitting under a half-faded caption. */
+const RAMP = 0.05;
+const HOLD = 0.1;
+const GAP = 0.02;
+const STEP = RAMP + HOLD + RAMP + GAP;
+const FIRST = 0.08;
+const NEVER = 9;
 
-export default function Stage({ drawers, hint }: { drawers: StageDrawer[]; hint: string }) {
+function schedule(i: number, count: number) {
+  const start = FIRST + i * STEP;
+  const last = i === count - 1;
+  const close = last ? NEVER : start + RAMP + HOLD;
+  return { start, close, captionEnd: last ? NEVER : close + RAMP };
+}
+
+/* Starts after the last drawer has settled open and completes before the scroll runs
+   out (its own ramp is 0.08). */
+const FINALE = 0.86;
+
+export default function Stage({
+  drawers,
+  hint,
+  mark,
+}: {
+  drawers: StageDrawer[];
+  hint: string;
+  mark: string;
+}) {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -45,49 +71,90 @@ export default function Stage({ drawers, hint }: { drawers: StageDrawer[]; hint:
   }, []);
 
   return (
-    <section ref={ref} className="stage relative h-[420vh] bg-ink text-paper">
+    <section
+      ref={ref}
+      className="stage relative h-[520vh] bg-ink text-paper"
+      style={{ "--ramp": RAMP, "--finale": FINALE } as React.CSSProperties}
+    >
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-        <div className="box mx-auto w-[min(96%,74vh)]">
-          <div className="box-body relative flex aspect-[2/3] w-[60%] flex-col sm:aspect-[5/6] gap-[2%] rounded-[3px] bg-gradient-to-b from-paper via-paper-deep to-[#d8cab2] p-[4%] shadow-[0_70px_140px_-30px_rgba(0,0,0,0.95)]">
-            {drawers.map((drawer, i) => (
-              <div
-                key={drawer.id}
-                className="relative flex-1 rounded-[2px] bg-[#100c09] shadow-[inset_0_3px_14px_rgba(0,0,0,0.9)]"
-              >
+        <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-6 sm:px-10 md:grid-cols-[auto_1fr] md:gap-16">
+          <div className="scene mx-auto md:mx-0">
+            <div className="box3d">
+              <div className="face face-back" />
+              <div className="face face-left" />
+              <div className="face face-right" />
+              <div className="face face-top">
+                <span className="display lid-mark">{mark}</span>
+              </div>
+              <div className="face face-bottom" />
+
+              {drawers.map((drawer, i) => (
                 <div
-                  className="drawer absolute inset-0 flex items-stretch rounded-[2px] bg-ink-soft shadow-[0_18px_36px_-12px_rgba(0,0,0,0.9)]"
-                  style={{ "--start": FIRST + i * STEP } as React.CSSProperties}
+                  key={drawer.id}
+                  className="drawer3d"
+                  style={
+                    {
+                      "--i": i,
+                      "--start": schedule(i, drawers.length).start,
+                      "--close": schedule(i, drawers.length).close,
+                    } as React.CSSProperties
+                  }
                 >
-                  <Image
-                    src={drawer.image}
-                    alt=""
-                    fill
-                    sizes="(max-width: 640px) 80vw, 56vh"
-                    className="rounded-[2px] object-cover"
-                    priority={i === 0}
-                  />
-                  <div className="drawer-dim pointer-events-none absolute inset-0 bg-[#100c09]" />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-ink/95 via-ink/35 to-transparent rtl:bg-gradient-to-r" />
-                  <div className="pointer-events-none absolute inset-y-0 end-0 w-[2.5%] bg-gradient-to-b from-paper via-paper-deep to-[#cbb99c]" />
-                  <div className="drawer-label relative flex w-full flex-col items-end justify-center gap-1 pe-[7%]">
-                    <span className="display text-[clamp(0.85rem,2.4vh,1.6rem)] leading-none text-paper">
-                      {drawer.name}
-                    </span>
-                    <span className="text-[clamp(0.5rem,1.1vh,0.72rem)] uppercase tracking-[0.18em] text-gold">
-                      {drawer.qty}
-                    </span>
+                  <div className="face drawer-floor">
+                    <Image
+                      src={drawer.image}
+                      alt=""
+                      fill
+                      sizes="(max-width: 768px) 80vw, 38vh"
+                      className="object-cover"
+                      priority={i === 0}
+                    />
+                    <div className="drawer-shade absolute inset-0 bg-[#17110d]" />
+                  </div>
+                  <div className="face drawer-back" />
+                  <div className="face drawer-left" />
+                  <div className="face drawer-right" />
+                  <div className="face drawer-front">
+                    <span className="drawer-pull" />
                   </div>
                 </div>
-              </div>
-            ))}
-            <div className="pointer-events-none absolute inset-y-0 end-0 z-30 w-[2.5%] bg-gradient-to-b from-paper via-paper-deep to-[#d0c0a5] shadow-[-18px_0_30px_-10px_rgba(0,0,0,0.8)] rtl:shadow-[18px_0_30px_-10px_rgba(0,0,0,0.8)]" />
+              ))}
+
+              <div className="face rim-top" />
+              <div className="face rim-bottom" />
+            </div>
+
+            <div className="box-shadow-pad" />
           </div>
 
-          <p className="mt-8 text-center text-xs uppercase tracking-[0.3em] text-kakuti-pale opacity-[clamp(0,calc(1-var(--p)*6),1)]">
-            {hint}
-          </p>
+          <div className="relative min-h-[11rem] md:min-h-[14rem]">
+            {drawers.map((drawer, i) => (
+              <figure
+                key={drawer.id}
+                className="caption absolute inset-0"
+                style={
+                  {
+                    "--a": schedule(i, drawers.length).start,
+                    "--b": schedule(i, drawers.length).captionEnd,
+                  } as React.CSSProperties
+                }
+              >
+                <figcaption>
+                  <p className="text-xs uppercase tracking-[0.3em] text-gold">{drawer.qty}</p>
+                  <h2 className="display mt-3 text-[clamp(1.8rem,4.5vw,3rem)] leading-tight">
+                    {drawer.name}
+                  </h2>
+                  <p className="mt-4 max-w-sm leading-relaxed text-paper/60">{drawer.note}</p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
         </div>
       </div>
+
+      <p className="scroll-hint pointer-events-none fixed inset-x-0 bottom-8 text-center text-xs uppercase tracking-[0.3em] text-kakuti-pale">
+        {hint}
+      </p>
     </section>
   );
 }

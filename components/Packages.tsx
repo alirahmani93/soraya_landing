@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { EnquiryButton } from "./Enquiry";
 
 export type PackageView = {
   id: string;
@@ -18,9 +19,11 @@ export type PackageView = {
 export default function Packages({
   packages,
   pendingLabel,
+  ctaLabel,
 }: {
   packages: PackageView[];
   pendingLabel: string;
+  ctaLabel: string;
 }) {
   const [active, setActive] = useState(0);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -105,6 +108,10 @@ export default function Packages({
             </article>
           ))}
           {current.groups.length % 2 === 1 && <div className="hidden bg-paper sm:block" />}
+        </div>
+
+        <div className="mt-12">
+          <EnquiryButton pkg={current.id} label={ctaLabel} />
         </div>
       </div>
     </div>

@@ -69,20 +69,40 @@ a `null` must render as *nothing*, never as a dead link or a placeholder number.
 The signature interaction: as the user scrolls, the box opens and drawers slide
 out one at a time, each revealing its contents.
 
-Implementation, in order of preference:
+Two variants ship side by side. **The flat one is the default** — photographic
+bands sliding sideways out of a 2D board (`components/StageFlat.tsx`). The CSS 3D
+box (`components/Stage.tsx`) is served at **`?hero=3d`**. Both read the same
+drawer data; keep them in step when the catalog changes.
 
-1. **Image sequence.** Frames shot as stop-motion with a fixed camera (the
-   imagery skill's shot 4), swapped on scroll progress. Predictable, art-directed,
-   works everywhere, degrades to a single still. This is the default.
-2. **CSS transforms on layered images.** Individual drawer PNGs translated on
-   scroll. Lighter than a sequence, less photographic.
-3. **WebGL / 3D model.** Only if 1 and 2 genuinely cannot carry it. Costs bundle
-   size, battery, and a fallback path, on a page selling to mobile users on Gulf
-   mobile networks.
+**The 3D variant.** Every surface of the box is a plane in one `preserve-3d`
+context; drawers translate along Z toward the viewer. No WebGL, no model file, no
+animation library — the whole thing is transforms driven by one custom property.
+
+Geometry rules that are easy to get backwards and painful to debug from a
+screenshot:
+
+- The camera needs a **negative** `rotateX` to look *down* into the box. Positive
+  looks up at it, which shows the underside and hides the lid.
+- A horizontal surface that must face up is `translateZ(-depth) rotateX(90deg)`.
+  `rotateX(-90deg)` puts the plane in the same place with its normal pointing
+  down — invisible once backfaces are culled.
+- Backfaces **must** be culled (`backface-visibility: hidden` on every face), or
+  the box's underside and far wall paint over the drawers.
+- Drawers run flush with the box sides. Inset them and the channel either side
+  shows the interior through a closed front.
+- Only one drawer opens at a time. Looking down into the box, two open drawers
+  hide each other, and the caption then describes a drawer the reader cannot see.
+
+When the real photography arrives, the alternative is a **stop-motion image
+sequence** — frames shot with a fixed camera (the imagery skill's shot 4) swapped
+on scroll progress. That is the better endpoint: actual product, predictable,
+art-directed, degrades to a single still. Treat the CSS box as the placeholder it
+is.
 
 Whichever: `prefers-reduced-motion` must produce a static, complete view of the
-open box — not a broken half-animation. And the sequence must not be the only way
-to learn what is in the box; the content exists as text below it as well.
+open box with all captions visible — not a broken half-animation. And the
+sequence must not be the only way to learn what is in the box; the content exists
+as text below it as well.
 
 ## Performance
 

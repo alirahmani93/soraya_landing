@@ -1,9 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import { EnquiryButton, EnquiryProvider } from "@/components/Enquiry";
+import HeroSwitch from "@/components/HeroSwitch";
 import Packages, { type PackageView } from "@/components/Packages";
-import Stage, { type StageDrawer } from "@/components/Stage";
+import { type StageDrawer } from "@/components/Stage";
 import {
+  brand,
   catalog,
   contactLinks,
   DRAWERS,
@@ -47,9 +51,14 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
   });
 
   const links = contactLinks();
+  const enquiryPackages = packages.map(({ id, name }) => ({ id, name }));
 
   return (
-    <>
+    <EnquiryProvider
+      copy={t.enquiry}
+      packages={enquiryPackages}
+      email={brand.contact.email as string | null}
+    >
       <header className="absolute inset-x-0 top-0 z-50 flex items-center justify-between px-6 py-6 text-paper sm:px-10">
         <span className="display text-2xl">{t.nav.brand}</span>
         <Link
@@ -76,7 +85,9 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
           </div>
         </section>
 
-        <Stage drawers={stageDrawers} hint={t.hero.scroll} />
+        <Suspense fallback={<div className="h-screen bg-ink" />}>
+          <HeroSwitch drawers={stageDrawers} hint={t.hero.scroll} mark={t.nav.brand} />
+        </Suspense>
 
         <section className="bg-paper px-6 py-28 sm:px-10">
           <div className="mx-auto max-w-6xl">
@@ -84,7 +95,11 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
               {t.specs.heading}
             </h2>
             <p className="mt-4 max-w-md text-ink/60">{t.specs.lede}</p>
-            <Packages packages={packages} pendingLabel={t.specs.pending} />
+            <Packages
+              packages={packages}
+              pendingLabel={t.specs.pending}
+              ctaLabel={t.enquiry.ctaPackage}
+            />
           </div>
         </section>
 
@@ -116,6 +131,10 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
               {t.contact.heading}
             </h2>
             <p className="mt-4 max-w-md text-ink/60">{t.contact.lede}</p>
+
+            <div className="mt-10">
+              <EnquiryButton label={t.enquiry.ctaContact} />
+            </div>
 
             {links.length > 0 ? (
               <ul className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
@@ -150,7 +169,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
         </div>
         <p className="mx-auto mt-6 max-w-6xl text-xs text-paper/25">{t.footer.placeholder}</p>
       </footer>
-    </>
+    </EnquiryProvider>
   );
 }
 
