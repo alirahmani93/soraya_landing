@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { track } from "@/lib/analytics";
 import { EnquiryButton } from "./Enquiry";
 
 export type PackageView = {
@@ -28,7 +29,28 @@ export default function Packages({
 }) {
   const [active, setActive] = useState(0);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
+  const cta = useRef<HTMLDivElement>(null);
   const current = packages[active];
+
+  const select = (index: number, how: "click" | "keyboard") => {
+    setActive(index);
+    track("package-switch", { package: packages[index].id, how });
+  };
+
+  useEffect(() => {
+    const node = cta.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        track("scroll-to-cta");
+      },
+      { threshold: 1 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   const move = (event: React.KeyboardEvent) => {
     const rtl = document.documentElement.dir === "rtl";
@@ -38,7 +60,7 @@ export default function Packages({
     event.preventDefault();
     const step = event.key === forward ? 1 : -1;
     const next = (active + step + packages.length) % packages.length;
-    setActive(next);
+    select(next, "keyboard");
     tabs.current[next]?.focus();
   };
 
@@ -61,7 +83,7 @@ export default function Packages({
             aria-selected={i === active}
             aria-controls={`panel-${pkg.id}`}
             tabIndex={i === active ? 0 : -1}
-            onClick={() => setActive(i)}
+            onClick={() => select(i, "click")}
             className={`display -mb-[17px] border-b-2 pb-4 text-xl transition-colors sm:text-2xl ${
               i === active
                 ? "border-saffron text-ink"
@@ -123,7 +145,7 @@ export default function Packages({
           {current.groups.length % 2 === 1 && <div className="hidden bg-paper sm:block" />}
         </div>
 
-        <div className="mt-12">
+        <div ref={cta} className="mt-12">
           <EnquiryButton pkg={current.id} label={ctaLabel} />
         </div>
       </div>

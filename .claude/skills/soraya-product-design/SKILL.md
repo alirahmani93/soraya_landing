@@ -50,15 +50,15 @@ completeness.
 | SKU | Name | Job |
 |---|---|---|
 | `soraya` | Soraya | The product. Everything else exists to point at it. Carries the house name. |
-| `lady-with-taste` | Lady with Taste | All three crops without the drawer cube. The closest thing to the flagship. |
+| `sofreh` | Sofreh | All three crops without the drawer cube. The closest thing to the flagship. |
 | `iran` | Iran | For the buyer who wants saffron and not a story. Also the price anchor. |
 | `peace` | Peace | Cheap enough to give away. The sample that is also a product. |
 
 Names are the owner's. Note that none of them describes what the box *lacks* —
-`lady-with-taste` is not "the one without drawers", it is its own thing. Keep that
+`sofreh` is not "the one without drawers", it is its own thing. Keep that
 when writing copy: never sell a smaller SKU as a reduced flagship.
 
-**`lady-with-taste` is the dangerous one.** It carries all three crops, so the
+**`sofreh` is the dangerous one.** It carries all three crops, so the
 only thing separating it from the flagship is the packaging and the tea bags. If
 it is sized generously it eats the flagship. Size it *down* — meaningfully less of
 each crop — so the ladder holds on contents as well as on presentation.
@@ -70,7 +70,7 @@ per mesghal, it cannibalises. Set the sizes and prices together with the pricing
 skill — never in isolation.
 
 Suggested starting point, to be confirmed against costs: `iran` at 1 mesghal,
-`lady-with-taste` at 1 mesghal plus 20 g kakuti powder plus 10 g rose buds,
+`sofreh` at 1 mesghal plus 20 g kakuti powder plus 10 g rose buds,
 `peace` at 12 bags.
 
 ## Adding or changing a SKU

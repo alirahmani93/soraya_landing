@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { track } from "@/lib/analytics";
 
 export type EnquiryCopy = {
   ctaPackage: string;
@@ -218,7 +219,10 @@ export function EnquiryButton({
   return (
     <button
       type="button"
-      onClick={() => open(pkg)}
+      onClick={() => {
+        track(pkg ? "enquiry-open-package" : "enquiry-open-contact", { package: pkg ?? "none" });
+        open(pkg);
+      }}
       className={
         tone === "solid"
           ? "bg-saffron px-7 py-3 text-sm uppercase tracking-[0.2em] text-paper transition-colors hover:bg-ink"

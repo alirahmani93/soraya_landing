@@ -117,8 +117,9 @@
       ],
       "notes": "kakuti-leaf quantity is a range in the owner's brief. A range cannot be costed or label-declared — resolve to a single count (or a declared net weight) before quoting."
     },
-    "lady-with-taste": {
-      "name": { "en": "Lady with Taste", "ar": "سيدة الذوق", "fa": "بانوی خوش‌ذوق" },
+    "sofreh": {
+      "name": { "en": "Sofreh", "ar": "سفرة", "fa": "سفره" },
+      "nameNote": "The spread laid for guests. Renamed from the brief's 'Lady with Taste' — the range names one evocative word each, and 'sufra' reads natively in Arabic.",
       "tier": "mid",
       "packaging": "slim-sleeve",
       "status": "proposed",

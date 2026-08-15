@@ -5,7 +5,7 @@
   },
   "nav": {
     "brand": "Soraya",
-    "switch": "العربية",
+    "switch": "AR",
     "switchLabel": "Switch to Arabic"
   },
   "hero": {
@@ -39,10 +39,16 @@
     "tiers": { "flagship": "Flagship", "mid": "Middle", "entry": "Entry" },
     "descriptions": {
       "soraya": "All four drawers, in a cube that opens layer by layer. The most we make.",
-      "lady-with-taste": "All three crops together, without the drawers and without the tea bags.",
+      "sofreh": "All three crops together, without the drawers and without the tea bags.",
       "iran": "Saffron and nothing else, in a slim sleeve with the same board and print.",
       "peace": "The tea bags on their own. The lightest thing we make, and the easiest to try."
     }
+  },
+  "box": {
+    "heading": "The box itself",
+    "lede": "A 200 mm cube of 3 mm greyboard, wrapped in uncoated paper: four sliding drawers, gold foil on the lid, a brushed brass half-moon pull. Turning here — not yet made.",
+    "alt": "A 3D model of the Soraya drawer box, turning slowly with its four drawers stepped open.",
+    "hint": "Drag to turn"
   },
   "origin": {
     "heading": "Zanjan",

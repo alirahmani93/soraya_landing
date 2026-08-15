@@ -2,9 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import BoxViewer from "@/components/BoxViewer";
+import ContactIcon from "@/components/ContactIcon";
 import { EnquiryButton, EnquiryProvider } from "@/components/Enquiry";
 import HeroSwitch from "@/components/HeroSwitch";
 import Packages, { type PackageView } from "@/components/Packages";
+import TrackedLink from "@/components/TrackedLink";
 import { type StageDrawer } from "@/components/Stage";
 import {
   brand,
@@ -95,6 +98,18 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
           </div>
         </section>
 
+        <section className="bg-paper-deep px-6 pb-16 pt-24 sm:px-10">
+          <div className="mx-auto max-w-6xl">
+            <div className="grid gap-6 md:grid-cols-[1fr_1.4fr] md:items-end">
+              <h2 className="display text-[clamp(2rem,5vw,3.5rem)] leading-tight">
+                {t.box.heading}
+              </h2>
+              <p className="max-w-lg text-ink/60">{t.box.lede}</p>
+            </div>
+            <BoxViewer label={t.box.alt} hint={t.box.hint} />
+          </div>
+        </section>
+
         <section className="bg-ink text-paper">
           <div className="relative h-[52vh] w-full">
             <Image
@@ -132,14 +147,19 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
               <ul className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
                 {links.map((link) => (
                   <li key={link.id}>
-                    <a href={link.href} className="group block">
-                      <span className="display block border-b-2 border-saffron/40 pb-2 text-2xl transition-colors group-hover:border-saffron group-hover:text-saffron">
+                    <TrackedLink
+                      href={link.href}
+                      event={`contact-${link.id}`}
+                      className="group block"
+                    >
+                      <span className="display flex items-center gap-3 border-b-2 border-saffron/40 pb-2 text-2xl transition-colors group-hover:border-saffron group-hover:text-saffron">
+                        <ContactIcon id={link.id} className="size-6 shrink-0 text-saffron" />
                         {t.contact.labels[link.id as keyof typeof t.contact.labels]}
                       </span>
                       <span className="mt-2 block text-sm text-ink/50">
                         <bdi dir="ltr">{link.value}</bdi>
                       </span>
-                    </a>
+                    </TrackedLink>
                   </li>
                 ))}
               </ul>

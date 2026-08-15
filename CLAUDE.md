@@ -84,11 +84,11 @@ The range is four SKUs, named by the owner. Ids in `catalog.json` match the name
 | Id | Name | What it is |
 |---|---|---|
 | `soraya` | Soraya | The flagship drawer cube, all four drawers |
-| `lady-with-taste` | Lady with Taste | All three crops, no drawers, no tea bags |
+| `sofreh` | Sofreh | All three crops, no drawers, no tea bags |
 | `iran` | Iran | Saffron alone |
 | `peace` | Peace | Tea bags alone |
 
-Treat the flagship as one point on a range, never as the only SKU. `lady-with-taste` carries all
+Treat the flagship as one point on a range, never as the only SKU. `sofreh` carries all
 three crops, so only packaging and the tea bags separate it from the flagship — it must be sized
 down or it cannibalises.
 
@@ -145,8 +145,20 @@ Next.js/Vercel questions to the installed `vercel:*` skills instead of restating
   provider and an API key; until then the copy says plainly that submitting opens the visitor's
   mail app, and there is a copy-to-clipboard fallback for anyone without one. Tailwind's preflight
   zeroes the margin a native dialog uses to centre itself, so the centring is explicit.
+- Below the packages section sits **the real 3D box**: `components/BoxViewer.tsx` renders the
+  three.js model in `lib/boxModel.ts`, ported from the Claude Design project
+  `ac31e815-21b6-42d8-afb1-3582f0d50f4a` (`soraya-box-model.js`). Same box maker's dimensions —
+  200 mm cube, 3 mm board, drawers of 40/44/48/53 mm. It is a **turntable, not an orbit**: the
+  camera elevation is fixed and dragging only changes yaw, so there is no angle where the box tips
+  or looks skewed. Field of view is 24° and the camera far back (near-orthographic) — a wide lens
+  makes a cube read as bent while it turns; on a narrow viewport pull the camera back rather than
+  widening the lens. three.js and the model load only when the section is within 600 px of the
+  viewport and the render loop stops when it scrolls out.
+- The foil lettering is drawn into a canvas at runtime, so it uses the site's own fonts read from
+  the `--font-*` custom properties — next/font family names are generated and cannot be hardcoded.
 - All imagery in `public/images/` is placeholder stock; see its `ATTRIBUTION.md`. There is no
-  photograph of the box because the box does not exist yet — it is drawn in CSS.
+  photograph of the box because the box does not exist yet — it is drawn in CSS in the hero and in
+  three.js below.
 
 ## Conventions
 

@@ -57,7 +57,7 @@ This deletes the product. Without the drawer cube the box is loose saffron in a
 carton and it competes on OMR per gram, where a family farm cannot win against
 volume importers.
 
-Do not argue the point — redirect to range. `iran`, `lady-with-taste`
+Do not argue the point — redirect to range. `iran`, `sofreh`
 and `peace` exist precisely so there is something to say yes to at a lower
 price without dismantling the flagship. Let the buyer choose a smaller box rather
 than a cheaper version of the big one.

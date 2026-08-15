@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Fraunces, Aref_Ruqaa, Tajawal } from "next/font/google";
 import { notFound } from "next/navigation";
+import Script from "next/script";
 import "../globals.css";
 import { getDictionary, isLocale, LOCALES } from "@/lib/i18n";
 import { brand } from "@/lib/catalog";
+import { UMAMI_SRC, UMAMI_WEBSITE_ID } from "@/lib/analytics";
 import { VIDEO_ORIGIN } from "@/components/HeroVideo";
 
 const fraunces = Fraunces({
@@ -61,6 +63,7 @@ export default async function LocaleLayout({
       </head>
       <body className={`${fraunces.variable} ${aref.variable} ${tajawal.variable}`}>
         {children}
+        <Script src={UMAMI_SRC} data-website-id={UMAMI_WEBSITE_ID} strategy="afterInteractive" />
       </body>
     </html>
   );

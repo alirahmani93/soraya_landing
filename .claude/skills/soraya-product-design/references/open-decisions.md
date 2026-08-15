@@ -65,11 +65,11 @@ Starting point to confirm, not to adopt:
 
 | SKU | Proposed |
 |---|---|
-| `lady-with-taste` | 1 mesghal + 20 g kakuti powder + 10 g rose buds |
+| `sofreh` | 1 mesghal + 20 g kakuti powder + 10 g rose buds |
 | `iran` | 1 mesghal |
 | `peace` | 12 bags |
 
-`lady-with-taste` carries all three crops, so contents alone barely separate it
+`sofreh` carries all three crops, so contents alone barely separate it
 from the flagship. Size it clearly smaller or it cannibalises.
 
 **Answer:**

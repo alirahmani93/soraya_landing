@@ -58,7 +58,7 @@ const COMPONENT_IMAGES: Record<string, string> = {
 export type SkuId = keyof typeof catalog.skus;
 
 /** Presentation order: flagship first, then down the ladder. */
-export const SKU_ORDER = ["soraya", "lady-with-taste", "iran", "peace"] as SkuId[];
+export const SKU_ORDER = ["soraya", "sofreh", "iran", "peace"] as SkuId[];
 
 export const FLAGSHIP: SkuId = "soraya";
 
