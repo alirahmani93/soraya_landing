@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import BoxViewer from "@/components/BoxViewer";
+// import BoxViewer from "@/components/BoxViewer";
 import ContactIcon from "@/components/ContactIcon";
 import { EnquiryButton, EnquiryProvider } from "@/components/Enquiry";
 import HeroSwitch from "@/components/HeroSwitch";
@@ -98,6 +98,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
           </div>
         </section>
 
+        {/* box viewer section hidden
         <section className="bg-paper-deep px-6 pb-16 pt-24 sm:px-10">
           <div className="mx-auto max-w-6xl">
             <div className="grid gap-6 md:grid-cols-[1fr_1.4fr] md:items-end">
@@ -109,6 +110,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
             <BoxViewer label={t.box.alt} hint={t.box.hint} />
           </div>
         </section>
+        */}
 
         <section className="bg-ink text-paper">
           <div className="relative h-[52vh] w-full">
